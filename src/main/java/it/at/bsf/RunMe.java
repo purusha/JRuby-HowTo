@@ -1,4 +1,4 @@
-package it.at.example1;
+package it.at.bsf;
 
 import org.apache.bsf.BSFManager;
 
