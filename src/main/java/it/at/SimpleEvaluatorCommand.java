@@ -2,25 +2,23 @@ package it.at;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SimpleEvaluatorCommand {	
-	private final StringBuffer command;
 	private final String template;
 	
-	public SimpleEvaluatorCommand(String template) {		
-		this.command = new StringBuffer(
+	public SimpleEvaluatorCommand(String template) {				
+		this.template = template;
+	}
+	
+	public String eval(Map<String, Object> context) {		
+		final StringBuffer command = new StringBuffer(
 			"require 'erb' \n" + 
 			"require 'ostruct' \n"
 		);	
 		
-		this.template = template;
-	}
-	
-	public String eval(Map<String, Object> context) {				
 		command.append("os = OpenStruct.new(" +
 			context.entrySet().stream()
 				.map(e -> e.getKey() + ": '" + e.getValue() + "'")
@@ -31,7 +29,7 @@ public class SimpleEvaluatorCommand {
 		
 		final StringBuilder sb = new StringBuilder();
 		final String[] commands = new String[]{"ruby", "-e", command.toString()};
-		System.out.println(Arrays.toString(commands));
+		//System.out.println(Arrays.toString(commands));
 		
 		Process proc = null;
 	    try {
